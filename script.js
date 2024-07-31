@@ -186,6 +186,48 @@ function copyInviteLink() {
     alert('Invite link copied to clipboard!');
 }
 
+// Constants
+const MAX_BATTERY_LEVEL = 10000;
+const REFILL_RATE = 5; // Battery refill rate per second
+
+// Function to get the current timestamp in seconds
+function getCurrentTimestamp() {
+    return Math.floor(Date.now() / 1000);
+}
+
+// Function to save battery state
+function saveBatteryState() {
+    localStorage.setItem('batteryLevel', batteryLevel);
+    localStorage.setItem('lastActiveTime', getCurrentTimestamp());
+}
+
+// Function to load battery state and calculate the refill
+function loadBatteryState() {
+    const storedBatteryLevel = localStorage.getItem('batteryLevel');
+    const lastActiveTime = localStorage.getItem('lastActiveTime');
+    
+    if (storedBatteryLevel !== null && lastActiveTime !== null) {
+        const elapsedTime = getCurrentTimestamp() - parseInt(lastActiveTime);
+        const refillAmount = elapsedTime * REFILL_RATE;
+        
+        batteryLevel = Math.min(parseInt(storedBatteryLevel) + refillAmount, MAX_BATTERY_LEVEL);
+    } else {
+        batteryLevel = MAX_BATTERY_LEVEL;
+    }
+
+    updateBattery(); // Update the battery display
+}
+
+// Function to handle page unload (user leaving the page)
+window.addEventListener('beforeunload', saveBatteryState);
+
+// Call this function on page load
+document.addEventListener('DOMContentLoaded', () => {
+    loadBatteryState();
+    // Initialize other app functions here...
+});
+
+
 // Initialize the invite page when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     initInvitePage();
