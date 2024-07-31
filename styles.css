@@ -108,7 +108,7 @@ svg {
     max-width: 300px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     border-radius: 50%;
 }
 
