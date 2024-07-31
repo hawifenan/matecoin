@@ -228,7 +228,7 @@ svg:active {
     padding: 10px;
     border-radius: 20px;
     position: fixed;
-    bottom: 0;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
